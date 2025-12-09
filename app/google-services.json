@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "13436753212",
+    "firebase_url": "https://fauzan-eec8f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "fauzan-eec8f",
+    "storage_bucket": "fauzan-eec8f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13436753212:android:d3e23f3dda5d78df293a39",
+        "android_client_info": {
+          "package_name": "com.abel.prak8"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsbE6CyGm3bS4-B3W5P86FWT8VHpdu504"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13436753212:android:f052c710be7bb4f0293a39",
+        "android_client_info": {
+          "package_name": "com.fauzan.post8"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsbE6CyGm3bS4-B3W5P86FWT8VHpdu504"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

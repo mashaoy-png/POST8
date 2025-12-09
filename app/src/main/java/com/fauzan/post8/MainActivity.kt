@@ -1,6 +1,7 @@
 package com.fauzan.post8
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -41,23 +42,31 @@ class MainActivity : AppCompatActivity() {
                 val books = mutableListOf<Book>()
                 for (data in snapshot.children) {
                     val book = data.getValue(Book::class.java)
-                    // PENTING: Ambil Key dari Firebase dan masukkan ke objek book
                     book?.id = data.key
-
                     book?.let { books.add(it) }
                 }
 
-                // Masukkan adapter dengan 2 fungsi lambda (Edit & Delete)
-                rvBooks.adapter = BookAdapter(books,
-                    onEdit = { book ->
-                        // Panggil dialog dengan membawa data buku yang mau diedit
-                        val dialog = AddBookDialog(this@MainActivity, booksRef, book)
-                        dialog.show()
-                    },
-                    onDelete = { book ->
-                        showDeleteConfirmation(book)
-                    }
-                )
+                // --- LOGIKA EMPTY STATE ---
+                if (books.isEmpty()) {
+                    // Jika data kosong: Munculkan Empty State, Hilangkan RecyclerView
+                    binding.layoutEmptyState.visibility = View.VISIBLE
+                    binding.rvBooks.visibility = View.GONE
+                } else {
+                    // Jika ada data: Hilangkan Empty State, Munculkan RecyclerView
+                    binding.layoutEmptyState.visibility = View.GONE
+                    binding.rvBooks.visibility = View.VISIBLE
+
+                    // Pasang adapter seperti biasa
+                    rvBooks.adapter = BookAdapter(books,
+                        onEdit = { book ->
+                            val dialog = AddBookDialog(this@MainActivity, booksRef, book)
+                            dialog.show()
+                        },
+                        onDelete = { book ->
+                            showDeleteConfirmation(book)
+                        }
+                    )
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -66,9 +75,9 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    // ... (Fungsi setupAddButton dan showDeleteConfirmation TETAP SAMA seperti sebelumnya) ...
     private fun setupAddButton() {
         binding.fabAddBooks.setOnClickListener {
-            // Panggil dialog tanpa membawa data (Mode Tambah)
             val dialog = AddBookDialog(this, booksRef)
             dialog.show()
         }
@@ -83,9 +92,6 @@ class MainActivity : AppCompatActivity() {
                     booksRef.child(book.id!!).removeValue()
                         .addOnSuccessListener {
                             Toast.makeText(this, "Data dihapus", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(this, "Gagal hapus", Toast.LENGTH_SHORT).show()
                         }
                 }
             }
